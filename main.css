@@ -1,0 +1,27 @@
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+#root {
+  margin: 0 1rem;
+  width: clamp(200px, 400px, 400px);
+}
+
+select,
+input,
+button {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+p {
+  margin-top: 0.25rem;
+  height: 1rem;
+}
