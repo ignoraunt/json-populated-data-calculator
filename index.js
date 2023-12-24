@@ -2,6 +2,9 @@
 function initializeForm() {
   var root = document.querySelector("#root");
 
+  var formElement = document.createElement("form")
+  root.appendChild(formElement)
+
   var typeInputDiv = document.createElement("div");
   var typeInputIcon = document.createElement("i");
   typeInputDiv.classList.add("has-icon-right");
@@ -10,32 +13,35 @@ function initializeForm() {
   var cableTypeSelectElement = document.createElement("select");
   cableTypeSelectElement.id = "type";
   cableTypeSelectElement.classList.add("form-select");
-  root.appendChild(typeInputDiv);
+  formElement.appendChild(typeInputDiv);
   typeInputDiv.appendChild(cableTypeSelectElement);
   typeInputDiv.appendChild(typeInputIcon);
 
   var cableSubtypeSelectElement = document.createElement("select");
   cableSubtypeSelectElement.id = "subtype";
   cableSubtypeSelectElement.classList.add("form-select");
-  root.appendChild(cableSubtypeSelectElement);
+  formElement.appendChild(cableSubtypeSelectElement);
 
   var lengthInput = document.createElement("input");
   lengthInput.id = "length";
   lengthInput.classList.add("form-input");
   lengthInput.placeholder = "км";
   lengthInput.disabled = true;
-  root.appendChild(lengthInput);
+  formElement.appendChild(lengthInput);
 
   var button = document.createElement("button");
+  button.type = "submit"
   button.id = "calculate";
   button.classList.add("btn");
   button.innerText = "Рассчитать";
   button.disabled = true;
-  root.appendChild(button);
+  formElement.appendChild(button);
 
   var p = document.createElement("p");
   p.id = "result";
-  root.appendChild(p);
+  formElement.appendChild(p);
+
+  cableTypeSelectElement.focus()
 }
 
 initializeForm();
@@ -157,7 +163,6 @@ function populateCableSubtypeSelect() {
 function getCableMassPerUnit() {
   cableSubtypeSelectElement.addEventListener("change", (e) => {
     lengthInput.disabled = false;
-    button.disabled = false;
     result.innerHTML = "";
 
     var currentSubtypeValue = Object.values(
