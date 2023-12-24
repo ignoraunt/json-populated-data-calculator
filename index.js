@@ -1,39 +1,39 @@
 // populate the page with initial elements
 function initializeForm() {
-  const root = document.querySelector("#root");
+  var root = document.querySelector("#root");
 
-  let typeInputDiv = document.createElement("div");
-  let typeInputIcon = document.createElement("i");
+  var typeInputDiv = document.createElement("div");
+  var typeInputIcon = document.createElement("i");
   typeInputDiv.classList.add("has-icon-right");
   typeInputIcon.classList.add("form-icon");
   typeInputIcon.id = "typeInputIcon";
-  let cableTypeSelectElement = document.createElement("select");
+  var cableTypeSelectElement = document.createElement("select");
   cableTypeSelectElement.id = "type";
   cableTypeSelectElement.classList.add("form-select");
   root.appendChild(typeInputDiv);
   typeInputDiv.appendChild(cableTypeSelectElement);
   typeInputDiv.appendChild(typeInputIcon);
 
-  let cableSubtypeSelectElement = document.createElement("select");
+  var cableSubtypeSelectElement = document.createElement("select");
   cableSubtypeSelectElement.id = "subtype";
   cableSubtypeSelectElement.classList.add("form-select");
   root.appendChild(cableSubtypeSelectElement);
 
-  let lengthInput = document.createElement("input");
+  var lengthInput = document.createElement("input");
   lengthInput.id = "length";
   lengthInput.classList.add("form-input");
   lengthInput.placeholder = "км";
   lengthInput.disabled = true;
   root.appendChild(lengthInput);
 
-  let button = document.createElement("button");
+  var button = document.createElement("button");
   button.id = "calculate";
   button.classList.add("btn");
   button.innerText = "Рассчитать";
   button.disabled = true;
   root.appendChild(button);
 
-  let p = document.createElement("p");
+  var p = document.createElement("p");
   p.id = "result";
   root.appendChild(p);
 }
@@ -41,16 +41,16 @@ function initializeForm() {
 initializeForm();
 
 // get the rendered elements
-const cableTypeSelectElement = document.querySelector("#type");
-const cableSubtypeSelectElement = document.querySelector("#subtype");
-const lengthInput = document.querySelector("#length");
-const button = document.querySelector("#calculate");
-const result = document.querySelector("#result");
-const typeInputIcon = document.querySelector("#typeInputIcon");
+var cableTypeSelectElement = document.querySelector("#type");
+var cableSubtypeSelectElement = document.querySelector("#subtype");
+var lengthInput = document.querySelector("#length");
+var button = document.querySelector("#calculate");
+var result = document.querySelector("#result");
+var typeInputIcon = document.querySelector("#typeInputIcon");
 
 // clear the select and fill it with default values
 function initializeSelectWithDefaultValues(element, value, isDisabled) {
-  let option = document.createElement("option");
+  var option = document.createElement("option");
   option.text = value;
   element.add(option);
   element.disabled = isDisabled;
@@ -69,17 +69,17 @@ initializeSelectWithDefaultValues(
 );
 
 // expose future data to the outer scope
-let cablesData;
-let cableSubtypeEntries;
-let cableMassPerUnit;
+var cablesData;
+var cableSubtypeEntries;
+var cableMassPerUnit;
 
 // main function
-const handleCableMassCalculation = async () => {
+var handleCableMassCalculation = async () => {
   try {
-    const url = "cables.json";
+    var url = "cables.json";
     typeInputIcon.classList.add("loading");
 
-    const data = await fetch(url);
+    var data = await fetch(url);
 
     if (!data.ok) throw new Error("данные не были получены.");
     cablesData = await data.json();
@@ -105,7 +105,7 @@ handleCableMassCalculation();
 // fills the first select element with initial data
 function populateCableTypeSelect() {
   Object.entries(cablesData).forEach(([key]) => {
-    let option = document.createElement("option");
+    var option = document.createElement("option");
     option.text = key;
     cableTypeSelectElement.add(option);
   });
@@ -128,13 +128,13 @@ function populateCableSubtypeSelect() {
 
     cableSubtypeSelectElement.options[0].disabled = true;
 
-    let cableTypeValues = Object.values(cablesData);
+    var cableTypeValues = Object.values(cablesData);
     cableSubtypeEntries = Object.entries(
       cableTypeValues[e.currentTarget.selectedIndex - 1]
     );
 
     if (cableSubtypeEntries.length === 0) {
-      let option = document.createElement("option");
+      var option = document.createElement("option");
       option.text = "Нет данных для данной группы";
       cableSubtypeSelectElement.innerHTML = "";
       cableSubtypeSelectElement.disabled = true;
@@ -142,7 +142,7 @@ function populateCableSubtypeSelect() {
       button.disabled = true;
     } else {
       Object.values(cableSubtypeEntries).forEach((value) => {
-        let option = document.createElement("option");
+        var option = document.createElement("option");
         option.text = value[0];
         cableSubtypeSelectElement.add(option);
       });
@@ -160,7 +160,7 @@ function getCableMassPerUnit() {
     button.disabled = false;
     result.innerHTML = "";
 
-    let currentSubtypeValue = Object.values(
+    var currentSubtypeValue = Object.values(
       cableSubtypeEntries[e.currentTarget.selectedIndex - 1][1]
     );
     cableMassPerUnit = currentSubtypeValue.find(
